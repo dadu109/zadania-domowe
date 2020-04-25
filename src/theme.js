@@ -10,6 +10,8 @@ export const theme = {
         green: '#5D8160',
         red: '#9B3C3C'
     },
+    navWidth:'55px',
+    headerHeight:'67px'
 };
 
 export const GlobalStyle = createGlobalStyle`

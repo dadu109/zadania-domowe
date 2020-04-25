@@ -57,12 +57,12 @@ const SideNav = ({children}) => {
 
             <ConstItems>
                 <NavItem icon={triangle} title="Schowaj" className="trigger" onClick={open}/>
-                <NavItem icon={home} title="Siemano"/>
+                <NavItem icon={home} link="#" title="Siemano"/>
                 {children}
             </ConstItems>
             <ConstItems>
-                <NavItem icon={plus} title="Dodaj Przedmiot"/>
-                <NavItem icon={cog} title="Ustawienia"/>
+                <NavItem icon={plus} link="#" title="Dodaj Przedmiot"/>
+                <NavItem icon={cog} link="#" title="Ustawienia"/>
             </ConstItems>
         </StyledWrapper>
     </>

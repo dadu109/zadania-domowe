@@ -1,7 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
+import {Link} from "react-router-dom";
 
-const StyledWrapper = styled.a`
+const LinkWrapper = styled(Link)`
+  padding:9px;
+  min-height: 41px;
+  margin-bottom: 20px;
+  display:flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 50px;
+  text-decoration: none;
+  background-color: ${props => props.theme.color.dark3};
+`;
+
+const NoLinkWrapper = styled.button`
+  border:none;
   padding:9px;
   min-height: 41px;
   margin-bottom: 20px;
@@ -38,11 +53,13 @@ const StyledTitle = styled.p`
   white-space: nowrap;
 `;
 
-const NavItem = ({color,title,icon,...props}) => (
-    <StyledWrapper href='#' {...props} >
-        {icon?<StyledIcon src={icon} />:<StyledColor color={color}/>}
+const NavItem = ({color, link, title, icon, ...props}) => {
+    const StyledWrapper = link ? LinkWrapper : NoLinkWrapper;
+
+    return <StyledWrapper to={link ? `/${link}` : null} {...props} >
+        {icon ? <StyledIcon src={icon}/> : <StyledColor color={color}/>}
         <StyledTitle>{title}</StyledTitle>
     </StyledWrapper>
-);
+};
 
 export default NavItem
