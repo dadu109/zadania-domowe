@@ -31,11 +31,21 @@ const StyledHeader = styled.div`
         }
     `:null}
   }
+  
+  img{
+    height: 42px;
+    position:absolute;
+    top:50%;
+    right:12px;
+    transform:translateY(-50%);
+  }
 `;
 
 const Header = ({children, color}) => (
     <StyledHeader color={color}>
         <h1>{children}</h1>
+        {/*TODO: Sort modal opening on img click*/}
+        <img alt='we' src={sort}/>
     </StyledHeader>
 );
 

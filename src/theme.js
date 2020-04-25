@@ -11,7 +11,8 @@ export const theme = {
         red: '#9B3C3C'
     },
     navWidth:'55px',
-    headerHeight:'67px'
+    headerHeight:'67px',
+    containerHeight:'42px'
 };
 
 export const GlobalStyle = createGlobalStyle`

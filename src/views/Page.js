@@ -11,10 +11,16 @@ const StyledWrapper = styled.div`
   right:0;
 `;
 
+const ContentWrapper = styled.div`
+  padding:20px;
+`;
+
 const Page = ({title, color, children}) => {
     return <StyledWrapper>
         <Header color={color}>{title}</Header>
-        {children}
+        <ContentWrapper>
+            {children}
+        </ContentWrapper>
     </StyledWrapper>
 
 };

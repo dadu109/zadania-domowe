@@ -48,21 +48,23 @@ const Cover = styled.div`
 
 const SideNav = ({children}) => {
     const [navOpen,setNavOpen] = useState(false)
-    const open = () => {setNavOpen(!navOpen)}
+    const toggle = () => {setNavOpen(!navOpen)}
+    const close = () => {setNavOpen(false)}
+    const items = React.Children.toArray(children)
 
     return (
     <>
-        <Cover show={navOpen}/>
+        <Cover show={navOpen} onClick={close}/>
         <StyledWrapper navOpen={navOpen}>
 
             <ConstItems>
-                <NavItem icon={triangle} title="Schowaj" className="trigger" onClick={open}/>
-                <NavItem icon={home} link="#" title="Siemano"/>
-                {children}
+                <NavItem icon={triangle} title="Schowaj" className="trigger" onClick={toggle}/>
+                <NavItem icon={home} link="#" onClick={close} title="Siemano"/>
+                {items.map(e=>React.cloneElement(e, {onClick: close} ))}
             </ConstItems>
             <ConstItems>
-                <NavItem icon={plus} link="#" title="Dodaj Przedmiot"/>
-                <NavItem icon={cog} link="#" title="Ustawienia"/>
+                <NavItem icon={plus} link="#" onClick={close} title="Dodaj Przedmiot"/>
+                <NavItem icon={cog} link="#" onClick={close} title="Ustawienia"/>
             </ConstItems>
         </StyledWrapper>
     </>
