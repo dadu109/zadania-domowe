@@ -9,6 +9,7 @@ const StyledContainer = styled.div`
   background-color:${props => props.theme.color.dark2};
   transition:height .2s cubic-bezier(0.77, 0.2, 0.05, 1);
   overflow: hidden;
+  margin-bottom:20px ;
 `;
 
 const ContainerHeader = styled.div`
@@ -19,10 +20,24 @@ const ContainerHeader = styled.div`
     font-size: 18px;
     color: #FFFFFF;
     margin:0;
-    position:absolute;
+    position:relative;
     left:15px;
     top:calc(${props => props.theme.containerHeight} / 2);
     transform: translateY(-50%);
+    &::after{
+      position: absolute;
+      content:'${props => props.count}';
+      width: 21px;
+      //height: 21px;
+      line-height: 21px;
+      text-align: center;
+      font-size: 14px;
+      color:#fff;
+      background:${props => props.theme.color.dark3};
+      border-radius: 50%;
+      top:50%;
+      transform: translate(10px,-50%);
+    }
   }
 `;
 
@@ -51,14 +66,18 @@ const Content = styled.div`
   padding: ${props => props.containerOpen?'26px':'0'};
   overflow: hidden;
   width:100%;
-  height:auto ;
+  height:auto;
+  div:last-child{
+    margin:0;
+  }
 `;
 
-const Container = ({title, count, children, open}) => {
+const Container = ({title, children, open}) => {
     const [containerOpen, setContainerOpen] = useState(!!open);
+    const childrenCount = children?children.length?children.length:1:0;
 
     return <StyledContainer >
-        <ContainerHeader onClick={() => setContainerOpen(!containerOpen)}>
+        <ContainerHeader count={childrenCount} onClick={() => setContainerOpen(!containerOpen)}>
             <h3>{title}</h3>
             <Trigger containerOpen={containerOpen}>
                 <img src={triangle} />

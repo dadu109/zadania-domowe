@@ -7,7 +7,7 @@ import cog from '../assets/cog-solid.svg'
 import plus from '../assets/plus.svg'
 
 const StyledWrapper = styled.div`
-    position:absolute;
+    position:fixed;
     top:0;
     left:0;
     padding:10px 7px;
