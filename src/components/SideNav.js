@@ -59,12 +59,12 @@ const SideNav = ({children}) => {
 
             <ConstItems>
                 <NavItem icon={triangle} title="Schowaj" className="trigger" onClick={toggle}/>
-                <NavItem icon={home} link="#" onClick={close} title="Siemano"/>
+                <NavItem icon={home} link="home" onClick={close} title="Siemano"/>
                 {items.map(e=>React.cloneElement(e, {onClick: close} ))}
             </ConstItems>
             <ConstItems>
                 <NavItem icon={plus} link="#" onClick={close} title="Dodaj Przedmiot"/>
-                <NavItem icon={cog} link="#" onClick={close} title="Ustawienia"/>
+                <NavItem icon={cog} link="settings" onClick={close} title="Ustawienia"/>
             </ConstItems>
         </StyledWrapper>
     </>

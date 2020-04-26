@@ -7,8 +7,8 @@ import SideNav from "../components/SideNav"
 import Page from "./Page";
 import Container from '../components/Container'
 import Assignment from "../components/Assignment";
+import {randCol} from '../utils'
 
-const randCol = ['D56717', 'D52217', '48D517', '17B2D5', 'D5C217'];
 
 const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula dui urna, eu egestas odio condimentum vitae. Sed imperdiet aliquam auctor. Ut at urna sit amet tortor mattis. ';
 
@@ -20,6 +20,13 @@ function Root() {
                 <SideNav>
                     {randCol.map(e => <NavItem color={`#${e}`} link={e} title={e}/>)}
                 </SideNav>
+                <Route path="/home">
+                    <Page title="Zadania" >
+                        <Container title="Wszystkie" open={true}>
+                            <Assignment subject={randCol[0]} dueDate={new Date()} title='Zadanie na głównej' description={lorem}/>
+                        </Container>
+                    </Page>
+                </Route>
                 {randCol.map(p =>
                     <Route path={`/${p}`}>
                         <Page title={p} color={`#${p}`}>
@@ -33,6 +40,13 @@ function Root() {
                         </Page>
                     </Route>
                 )}
+                <Route path="/settings">
+                    <Page title="Ustawienia" >
+                        <Container title="Wszystkie" open={true}>
+
+                        </Container>
+                    </Page>
+                </Route>
             </Router>
         </ThemeProvider>
     );

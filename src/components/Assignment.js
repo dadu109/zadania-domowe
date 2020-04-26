@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components'
+import { useLocation } from 'react-router-dom'
 import {monthNames} from '../utils';
 import check from '../assets/check-solid.svg';
 import edit from '../assets/edit-solid.svg';
@@ -10,12 +11,24 @@ const StyledWrapper = styled.div`
   background-color:${props => props.theme.color.dark4};
   border-radius: 10px;
   margin-bottom:20px;
+  position: relative;
 `;
 
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const Color = styled.div`
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background-color:${props => props.color};
+    position:absolute;
+    top:0;
+    left:0;
+    transform:translate(-40% ,-40%);
 `;
 
 const Title = styled.h3`
@@ -32,7 +45,7 @@ const Date = styled.div`
   
   span{
     font-weight: bold;
-    font-size: 9px;
+    font-size: 12px;
     color:#fff;
     text-align: center;
   }
@@ -81,8 +94,11 @@ const Assignment = ({title,dueDate,subject,description}) => {
     const [assignmentOpen,setAssignmentOpen] = useState(false);
     const toggle = () => {setAssignmentOpen(!assignmentOpen)};
     const parseTime = (time) => (time<10?`0${time}`:time);
+    const location = useLocation();
+    const path = location.pathname;
 
     return<StyledWrapper>
+        {path==="/home"&&<Color color={`#${subject}`}/>}
         <Header onClick={toggle}>
             <Title>{title}</Title>
             <Date>
