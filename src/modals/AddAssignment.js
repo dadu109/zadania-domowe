@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Modal from "./Modal";
 import TextInput from "../components/TextInput";
 import TextArea from "../components/TextArea";
-//import DateInput from "../components/DateInput";
+import DateInput from "../components/DateInput";
 import {randCol} from "../utils";
 import SubjectPicker from "../components/SubjectPicker";
 
@@ -40,8 +40,8 @@ const AddAssignment = ({closingFn, subject}) => {
     const [formData, setFormData] = useState({
         title: '',
         desc: '',
-        subject: '',
-        date: '',
+        subject: randCol[0].name,
+        date: {},
         time: ''
     });
 
@@ -80,7 +80,9 @@ const AddAssignment = ({closingFn, subject}) => {
             }}
             options={randCol}
         />
-        {/*<DateInput/>*/}
+        <DateInput title="Data" changeHandle={date => {
+            setFormData({...formData,date:date})
+        }}/>
     </Modal>
 };
 
