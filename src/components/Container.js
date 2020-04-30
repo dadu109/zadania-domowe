@@ -74,18 +74,19 @@ const Content = styled.div`
 
 const Container = ({title, children, open}) => {
     const [containerOpen, setContainerOpen] = useState(!!open);
-    const childrenCount = children?children.length?children.length:1:0;
+    const childrenCount = children?Array.isArray(children)?children.length:1:0;
+
 
     return <StyledContainer >
         <ContainerHeader count={childrenCount} onClick={() => setContainerOpen(!containerOpen)}>
             <h3>{title}</h3>
             <Trigger containerOpen={containerOpen}>
-                <img src={triangle} />
+                <img alt='triangle' src={triangle} />
             </Trigger>
         </ContainerHeader>
-        <Content containerOpen={containerOpen}>
+        {childrenCount!==0 && <Content containerOpen={containerOpen}>
             {containerOpen && children}
-        </Content>
+        </Content>}
     </StyledContainer>
 };
 

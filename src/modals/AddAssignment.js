@@ -4,8 +4,8 @@ import Modal from "./Modal";
 import TextInput from "../components/TextInput";
 import TextArea from "../components/TextArea";
 //import DateInput from "../components/DateInput";
-import Select from "../components/Select";
 import {randCol} from "../utils";
+import SubjectPicker from "../components/SubjectPicker";
 
 const Header = styled.div`
   display:flex;
@@ -36,40 +36,52 @@ const Close = styled.div`
   }
 `;
 
-const AddAssignment = ({closingFn,subject}) => {
-    const [formData,setFormData] = useState({
-        title:'',
-        desc:'',
-        subject:'',
-        date:'',
-        time:''
+const AddAssignment = ({closingFn, subject}) => {
+    const [formData, setFormData] = useState({
+        title: '',
+        desc: '',
+        subject: '',
+        date: '',
+        time: ''
     });
 
     return <Modal closingFn={closingFn}>
-            <Header>
-                <h4>Dodaj zadanie</h4>
-                <Close onClick={()=>{closingFn()}}>
-                    <span>+</span>
-                </Close>
-            </Header>
-            <TextInput
-                changeHandle={(e)=>{if(formData.title.length<=25) {
-                    setFormData({...formData,title:e})
-                }}}
-                value={formData.title}
-                title="Tytuł"
-            />
-            <TextArea
-                changeHandle={(e)=>{if(formData.title.length<=100) {
-                    setFormData({...formData,desc:e})
-                }}}
-                value={formData.desc}
-                cols="20"
-                title="Opis zadania"
-            />
-            <Select changeHandle={(curr)=>{setFormData({...formData,subject:curr})}} options={randCol}/>
-            {/*<DateInput/>*/}
-        </Modal>
+        <Header>
+            <h4>Dodaj zadanie</h4>
+            <Close onClick={() => {
+                closingFn()
+            }}>
+                <span>+</span>
+            </Close>
+        </Header>
+        <TextInput
+            changeHandle={(e) => {
+                if (formData.title.length <= 25) {
+                    setFormData({...formData, title: e})
+                }
+            }}
+            value={formData.title}
+            title="Tytuł"
+        />
+        <TextArea
+            changeHandle={(e) => {
+                if (formData.title.length <= 100) {
+                    setFormData({...formData, desc: e})
+                }
+            }}
+            value={formData.desc}
+            cols="20"
+            title="Opis zadania"
+        />
+        <SubjectPicker
+            title="Wybierz przedmiot"
+            changeHandle={(curr) => {
+                setFormData({...formData, subject: curr})
+            }}
+            options={randCol}
+        />
+        {/*<DateInput/>*/}
+    </Modal>
 };
 
 export default AddAssignment;

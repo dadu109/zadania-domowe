@@ -12,6 +12,7 @@ const Title = styled.h5`
   margin:0;
   font-size: 12px;
   color:#fff;
+  font-weight: normal;
 `;
 
 const StyledInput = styled.textarea`

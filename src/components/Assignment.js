@@ -90,7 +90,7 @@ const Buttons = styled.div`
   }
 `;
 
-const Assignment = ({title,dueDate,subject,description}) => {
+const Assignment = ({title,dueDate,subjectColor,description}) => {
     const [assignmentOpen,setAssignmentOpen] = useState(false);
     const toggle = () => {setAssignmentOpen(!assignmentOpen)};
     const parseTime = (time) => (time<10?`0${time}`:time);
@@ -98,7 +98,7 @@ const Assignment = ({title,dueDate,subject,description}) => {
     const path = location.pathname;
 
     return<StyledWrapper>
-        {path==="/home"&&<Color color={`#${subject}`}/>}
+        {path==="/home"&&<Color color={`#${subjectColor}`}/>}
         <Header onClick={toggle}>
             <Title>{title}</Title>
             <Date>

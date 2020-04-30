@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import Header from '../components/Header'
 import AddAssignment from "../modals/AddAssignment";
-import {useLocation} from "react-router-dom";
 
 const StyledWrapper = styled.div`
   width:calc(100vw - ${props => props.theme.navWidth});
@@ -35,8 +34,6 @@ const Page = ({title, color, children}) => {
     const [addingModalOpen,setAddingModalOpen] = useState(false);
     const closeModal = () => {setAddingModalOpen(false)};
     const openModal = () => {setAddingModalOpen(true)};
-    const location = useLocation();
-    const path = location.pathname;
 
     return <>
         {addingModalOpen && <AddAssignment closingFn={closeModal}/>}
@@ -46,7 +43,7 @@ const Page = ({title, color, children}) => {
                 {children}
             </ContentWrapper>
         </StyledWrapper>
-        {path!=='/home'&&<AddButton onClick={()=>{openModal()}}>+</AddButton>}
+        <AddButton onClick={()=>{openModal()}}>+</AddButton>
     </>
 };
 

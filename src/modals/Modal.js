@@ -9,6 +9,7 @@ const Cover = styled.div`
   width:100vw;
   background: rgba(18, 18, 18, 0.7);
   z-index:300;
+  backdrop-filter: blur(3px);
 `;
 
 const Wrapper = styled.div`

@@ -36,6 +36,7 @@ const ConstItems = styled.div`
 `
 
 const Cover = styled.div`
+    backdrop-filter: blur(3px);
     position:absolute;
     top:0;
     left:0;

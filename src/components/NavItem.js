@@ -51,6 +51,8 @@ const StyledTitle = styled.p`
   margin:0 0 0 13px;
   font-weight: bold;
   white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 const NavItem = ({color, link, title, icon, ...props}) => {

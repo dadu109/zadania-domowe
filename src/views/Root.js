@@ -7,7 +7,7 @@ import SideNav from "../components/SideNav"
 import Page from "./Page";
 import Container from '../components/Container'
 import Assignment from "../components/Assignment";
-import {randCol} from '../utils'
+import {randCol,assignments} from '../utils'
 
 
 const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula dui urna, eu egestas odio condimentum vitae. Sed imperdiet aliquam auctor. Ut at urna sit amet tortor mattis. ';
@@ -18,21 +18,29 @@ function Root() {
             <Router>
                 <GlobalStyle/>
                 <SideNav>
-                    {randCol.map(e => <NavItem color={`#${e}`} link={e} title={e}/>)}
+                    {randCol.map(e => <NavItem color={`#${e.color}`} link={e.name} title={e.name}/>)}
                 </SideNav>
                 <Route path="/home">
                     <Page title="Zadania" >
                         <Container title="Wszystkie" open={true}>
-                            <Assignment subject={randCol[0]} dueDate={new Date()} title='Zadanie na głównej' description={lorem}/>
+                            {assignments.map(e=>(
+                                <Assignment
+                                    dueDate={e.dueDate}
+                                    title={e.title}
+                                    description={e.desc}
+                                    subjectColor={randCol.find(f=>f.name===e.subject).color}
+                                />
+                            ))}
                         </Container>
                     </Page>
                 </Route>
                 {randCol.map(p =>
-                    <Route path={`/${p}`}>
-                        <Page title={p} color={`#${p}`}>
+                    <Route path={`/${p.name}`}>
+                        <Page title={p.name} color={`#${p.color}`}>
                             <Container title="Do zrobienia" open={true}>
-                                <Assignment dueDate={new Date()} title='Rozprawka' description={lorem}/>
-                                <Assignment dueDate={new Date()} title='Rozprawka' description={lorem}/>
+                                {assignments.filter(e=>e.subject===p.name).map(e=>(
+                                    <Assignment dueDate={e.dueDate} title={e.title} description={e.desc}/>
+                                ))}
                             </Container>
                             <Container title="Zrobione">
                                 <Assignment dueDate={new Date()} title='Rozprawka' description={lorem}/>
@@ -43,7 +51,7 @@ function Root() {
                 <Route path="/settings">
                     <Page title="Ustawienia" >
                         <Container title="Wszystkie" open={true}>
-
+                            <Assignment dueDate={new Date()} title='Rozprawka' description={lorem}/>
                         </Container>
                     </Page>
                 </Route>
