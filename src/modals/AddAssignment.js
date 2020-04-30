@@ -2,6 +2,10 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import Modal from "./Modal";
 import TextInput from "../components/TextInput";
+import TextArea from "../components/TextArea";
+//import DateInput from "../components/DateInput";
+import Select from "../components/Select";
+import {randCol} from "../utils";
 
 const Header = styled.div`
   display:flex;
@@ -32,7 +36,7 @@ const Close = styled.div`
   }
 `;
 
-const AddAssignment = ({closingFn}) => {
+const AddAssignment = ({closingFn,subject}) => {
     const [formData,setFormData] = useState({
         title:'',
         desc:'',
@@ -40,6 +44,7 @@ const AddAssignment = ({closingFn}) => {
         date:'',
         time:''
     });
+
     return <Modal closingFn={closingFn}>
             <Header>
                 <h4>Dodaj zadanie</h4>
@@ -49,12 +54,21 @@ const AddAssignment = ({closingFn}) => {
             </Header>
             <TextInput
                 changeHandle={(e)=>{if(formData.title.length<=25) {
-                    console.log(e);
                     setFormData({...formData,title:e})
                 }}}
                 value={formData.title}
                 title="Tytuł"
             />
+            <TextArea
+                changeHandle={(e)=>{if(formData.title.length<=100) {
+                    setFormData({...formData,desc:e})
+                }}}
+                value={formData.desc}
+                cols="20"
+                title="Opis zadania"
+            />
+            <Select changeHandle={(curr)=>{setFormData({...formData,subject:curr})}} options={randCol}/>
+            {/*<DateInput/>*/}
         </Modal>
 };
 

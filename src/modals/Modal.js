@@ -21,6 +21,12 @@ const Wrapper = styled.div`
   border-radius: 10px;
   padding:20px;
   z-index:400;
+  &>*{
+    margin-bottom: 20px;
+    &:last-child{
+      margin:0;
+    }
+  }
 `;
 
 const Modal = ({children,closingFn}) => {
