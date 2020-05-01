@@ -1,7 +1,9 @@
-import React, {useState} from "react";
+import React, {useState,useContext} from "react";
 import styled from "styled-components";
 import Header from '../components/Header'
 import AddAssignment from "../modals/AddAssignment";
+import {Redirect} from "react-router-dom";
+import {AuthContext} from "../Auth";
 
 const StyledWrapper = styled.div`
   width:calc(100vw - ${props => props.theme.navWidth});
@@ -34,6 +36,9 @@ const Page = ({title, color, children}) => {
     const [addingModalOpen,setAddingModalOpen] = useState(false);
     const closeModal = () => {setAddingModalOpen(false)};
     const openModal = () => {setAddingModalOpen(true)};
+    const {currentUser} = useContext(AuthContext);
+
+    if(!currentUser)return <Redirect to={'/login'}/>;
 
     return <>
         {addingModalOpen && <AddAssignment closingFn={closeModal}/>}
