@@ -4,11 +4,11 @@ import styled from "styled-components";
 const SelectWrapper = styled.div`
   position:relative;
 `;
-
 const StyledWrapper = styled.div`
+  z-index: 10000;
   background-color:${props => props.theme.color.dark5};
   width:100%;
-  max-height: ${props => props.open ? "100px" : '0px'};
+  max-height: ${props => props.open ? "90px" : '0px'};
   transition:max-height 0.2s cubic-bezier(0.77, 0.2, 0.05, 1);
   position:absolute;
   padding:0 7px;
@@ -23,8 +23,8 @@ const SelectItem = styled.div`
   background: ${props => props.theme.color.dark6};
   height:28px;
   color:#fff;
-  padding:5px 5px 5px ${props => props.hasColor?'40px':'5px'};
-  margin:7px 0 ;
+  padding:2px 2px 2px ${props => props.hasColor?'40px':'2px'};
+  margin:5px 0 ;
   border-radius:15px;
   top:100%;
   position:relative;
@@ -66,15 +66,20 @@ const StyledHeader = styled.div`
   }
 `;
 
-const Select = ({options, changeHandle, defaultValue, ...props}) => {
+const Select = ({options, changeHandle, defaultValue,initialOpen, ...props}) => {
     //TODO: context on use state
     const [currOption, setCurrOption] = useState(defaultValue?defaultValue:options[0].name);
     const [currColor, setCurrColor] = useState(options[0].color);
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(initialOpen);
 
     useEffect(() => {
-        changeHandle(currOption)
-    }, [currOption]);
+        setOpen(initialOpen);
+    }, [initialOpen]);
+
+    useEffect(()=>{
+        changeHandle(currOption);
+        setOpen(false);
+    },[currOption]);
 
     return (
         <SelectWrapper {...props}>

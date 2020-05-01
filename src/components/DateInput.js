@@ -59,6 +59,7 @@ const DateInput = ({changeHandle, title}) => {
             (e, i) => ({name: i + 1})
         )
     });
+    const [openSelect,setOpenSelect] = useState('');
 
     useEffect(e=>{
         changeHandle({
@@ -72,12 +73,18 @@ const DateInput = ({changeHandle, title}) => {
         <Title>{title}</Title>
         <InputsBox>
             <DaySelect
+                initialOpen={openSelect==='day'}
                 options={state.daysInMonth}
                 defaultValue={state.day}
-                changeHandle={(day) => setState({...state, day: day})}/>
+                onClick={()=>setOpenSelect('day')}
+                changeHandle={(day) => {
+                    setState({...state, day: day})
+                }}/>
             <MonthSelect
+                initialOpen={openSelect==='month'}
                 options={months}
                 defaultValue={monthNames[state.month]}
+                onClick={()=>setOpenSelect('month')}
                 changeHandle={(month) => {
                     setState({
                         ...state,
@@ -88,15 +95,19 @@ const DateInput = ({changeHandle, title}) => {
                     });
                 }}/>
             <YearSelect
+                initialOpen={openSelect==='year'}
                 options={years}
                 defaultValue={state.year}
-                changeHandle={(year) => setState({
-                    ...state,
-                    year: year,
-                    daysInMonth: Array.from(
-                        {length: new Date(year, state.month, 0).getDate()},
-                        (e, i) => ({name: i + 1}))
-                })}/>
+                onClick={()=>setOpenSelect('year')}
+                changeHandle={(year) => {
+                    setState({
+                        ...state,
+                        year: year,
+                        daysInMonth: Array.from(
+                            {length: new Date(year, state.month, 0).getDate()},
+                            (e, i) => ({name: i + 1}))
+                    })
+                }}/>
         </InputsBox>
     </InputWrapper>
 };

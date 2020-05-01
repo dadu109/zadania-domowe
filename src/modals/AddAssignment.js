@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useContext} from "react";
 import styled from "styled-components";
 import Modal from "./Modal";
 import TextInput from "../components/TextInput";
@@ -6,6 +6,9 @@ import TextArea from "../components/TextArea";
 import DateInput from "../components/DateInput";
 import {randCol} from "../utils";
 import SubjectPicker from "../components/SubjectPicker";
+import TimeInput from '../components/TimeInput'
+import Button from "../components/Button";
+import Context from "../store/context";
 
 const Header = styled.div`
   display:flex;
@@ -35,14 +38,31 @@ const Close = styled.div`
     transform: translate(-50%,-50%);
   }
 `;
+const Flex = styled.div`
+  display:flex;
+  justify-content: space-between;
+  align-items: stretch;
+  position: relative;
+`;
+const StyledButton = styled(Button)`
+  position: absolute;
+  right:0;
+  height:100%;
+  width:48%
+`;
+const StyledTimeInput = styled(TimeInput)`
+  width:48%
+`;
 
 const AddAssignment = ({closingFn, subject}) => {
+    const {state,actions} = useContext(Context);
+
     const [formData, setFormData] = useState({
         title: '',
         desc: '',
         subject: randCol[0].name,
         date: {},
-        time: ''
+        time: {}
     });
 
     return <Modal closingFn={closingFn}>
@@ -81,8 +101,30 @@ const AddAssignment = ({closingFn, subject}) => {
             options={randCol}
         />
         <DateInput title="Data" changeHandle={date => {
-            setFormData({...formData,date:date})
+            setFormData({...formData, date: date})
         }}/>
+        <Flex>
+            <StyledTimeInput
+                title="Do której"
+                changeHandle={(time) => {
+                    setFormData({...formData, time: time})
+                }}
+            />
+            <StyledButton yes onClick={()=> {
+                actions({
+                    type:'addAssignment',
+                    payload:{
+                        title:formData.title,
+                        desc:formData.desc,
+                        subject: formData.subject,
+                        dueDate: new Date(
+                            formData.date.year,formData.date.month,formData.date.day,formData.time.hours,formData.time.minutes
+                        )
+                    }
+                });
+                closingFn();
+            }}>Dodaj</StyledButton>
+        </Flex>
     </Modal>
 };
 

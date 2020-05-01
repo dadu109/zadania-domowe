@@ -2,10 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './views/Root';
 import * as serviceWorker from './serviceWorker';
+import useGlobalStore from "./store/useGlobalStore";
+import Context from "./store/context";
+import {assignments} from "./utils";
+
+const Index = ({children}) => {
+    const store = useGlobalStore(assignments);
+    return (
+        <Context.Provider value={store}>
+            {children}
+        </Context.Provider>
+    )
+};
 
 ReactDOM.render(
   <React.StrictMode>
-    <Root />
+    <Index>
+        <Root />
+    </Index>
   </React.StrictMode>,
   document.getElementById('root')
 );

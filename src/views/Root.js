@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import {ThemeProvider} from 'styled-components';
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import {theme, GlobalStyle} from '../theme';
@@ -7,12 +7,16 @@ import SideNav from "../components/SideNav"
 import Page from "./Page";
 import Container from '../components/Container'
 import Assignment from "../components/Assignment";
-import {randCol,assignments} from '../utils'
+import {randCol} from '../utils'
+import Context from "../store/context";
 
 
 const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula dui urna, eu egestas odio condimentum vitae. Sed imperdiet aliquam auctor. Ut at urna sit amet tortor mattis. ';
 
+
 function Root() {
+    const {state} = useContext(Context);
+
     return (
         <ThemeProvider theme={theme}>
             <Router>
@@ -23,7 +27,7 @@ function Root() {
                 <Route path="/home">
                     <Page title="Zadania" >
                         <Container title="Wszystkie" open={true}>
-                            {assignments.map(e=>(
+                            {state.map(e=>(
                                 <Assignment
                                     dueDate={e.dueDate}
                                     title={e.title}
@@ -38,7 +42,7 @@ function Root() {
                     <Route path={`/${p.name}`}>
                         <Page title={p.name} color={`#${p.color}`}>
                             <Container title="Do zrobienia" open={true}>
-                                {assignments.filter(e=>e.subject===p.name).map(e=>(
+                                {state.filter(e=>e.subject===p.name).map(e=>(
                                     <Assignment dueDate={e.dueDate} title={e.title} description={e.desc}/>
                                 ))}
                             </Container>
