@@ -5,8 +5,8 @@ const useGlobalStore = (initialStore) => {
     const actions = (action) => {
         const {type,payload} = action;
         switch (type) {
-            case 'addAssignment':
-                return setState([...state,payload]);
+            case 'setState':
+                return setState(payload);
             default:
                 return state
         }

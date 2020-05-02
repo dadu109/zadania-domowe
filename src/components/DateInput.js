@@ -41,7 +41,7 @@ const MonthSelect = styled(Select)`
   }
 `;
 
-const months = monthNames.map(e => ({name: e}));
+const months = monthNames.map(e => ({title: e}));
 
 function daysInCurrMonth() {
     const now = new Date();
@@ -56,7 +56,7 @@ const DateInput = ({changeHandle, title}) => {
         year: date.getFullYear(),
         daysInMonth: Array.from(
             {length: daysInCurrMonth()},
-            (e, i) => ({name: i + 1})
+            (e, i) => ({title: i + 1})
         )
     });
     const [openSelect,setOpenSelect] = useState('');
@@ -91,7 +91,7 @@ const DateInput = ({changeHandle, title}) => {
                         month: monthNames.findIndex(e => e === month),
                         daysInMonth: Array.from(
                             {length: new Date(state.year, monthNames.findIndex(e => e === month), 0).getDate()},
-                            (e, i) => ({name: i + 1}))
+                            (e, i) => ({title: i + 1}))
                     });
                 }}/>
             <YearSelect
@@ -105,7 +105,7 @@ const DateInput = ({changeHandle, title}) => {
                         year: year,
                         daysInMonth: Array.from(
                             {length: new Date(year, state.month, 0).getDate()},
-                            (e, i) => ({name: i + 1}))
+                            (e, i) => ({title: i + 1}))
                     })
                 }}/>
         </InputsBox>

@@ -39,7 +39,7 @@ const Title = styled.h3`
     color: #FFFFFF;
 `;
 
-const Date = styled.div`
+const DateContainer = styled.div`
   display:flex;
   flex-direction: column;
   
@@ -91,6 +91,7 @@ const Buttons = styled.div`
 `;
 
 const Assignment = ({title,dueDate,subjectColor,description}) => {
+    const actualDate = new Date(dueDate*1000);
     const [assignmentOpen,setAssignmentOpen] = useState(false);
     const toggle = () => {setAssignmentOpen(!assignmentOpen)};
     const parseTime = (time) => (time<10?`0${time}`:time);
@@ -101,10 +102,10 @@ const Assignment = ({title,dueDate,subjectColor,description}) => {
         {path==="/home"&&<Color color={`#${subjectColor}`}/>}
         <Header onClick={toggle}>
             <Title>{title}</Title>
-            <Date>
-                <span>{parseTime(dueDate.getHours())}:{parseTime(dueDate.getMinutes())}</span>
-                <span>{dueDate.getDate()} {monthNames[dueDate.getMonth()]}</span>
-            </Date>
+            <DateContainer>
+                <span>{parseTime(actualDate.getHours())}:{parseTime(actualDate.getMinutes())}</span>
+                <span>{actualDate.getDate()} {monthNames[actualDate.getMonth()]}</span>
+            </DateContainer>
         </Header>
         <Content assignmentOpen={assignmentOpen}>
             <p>{description}</p>

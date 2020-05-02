@@ -4,10 +4,11 @@ import Modal from "./Modal";
 import TextInput from "../components/TextInput";
 import TextArea from "../components/TextArea";
 import DateInput from "../components/DateInput";
-import {randCol} from "../utils";
 import SubjectPicker from "../components/SubjectPicker";
 import TimeInput from '../components/TimeInput'
 import Button from "../components/Button";
+import firebase from "firebase";
+import {AuthContext} from "../Auth";
 import Context from "../store/context";
 
 const Header = styled.div`
@@ -54,13 +55,14 @@ const StyledTimeInput = styled(TimeInput)`
   width:48%
 `;
 
-const AddAssignment = ({closingFn, subject}) => {
+const AddAssignment = ({closingFn}) => {
     const {state,actions} = useContext(Context);
+    const {currentUser} = useContext(AuthContext);
 
     const [formData, setFormData] = useState({
         title: '',
         desc: '',
-        subject: randCol[0].name,
+        subject: state.subjects[0].title,
         date: {},
         time: {}
     });
@@ -98,7 +100,7 @@ const AddAssignment = ({closingFn, subject}) => {
             changeHandle={(curr) => {
                 setFormData({...formData, subject: curr})
             }}
-            options={randCol}
+            options={state.subjects}
         />
         <DateInput title="Data" changeHandle={date => {
             setFormData({...formData, date: date})
@@ -110,18 +112,24 @@ const AddAssignment = ({closingFn, subject}) => {
                     setFormData({...formData, time: time})
                 }}
             />
-            <StyledButton yes onClick={()=> {
-                actions({
-                    type:'addAssignment',
-                    payload:{
-                        title:formData.title,
-                        desc:formData.desc,
+            <StyledButton yes onClick={async ()=> {
+
+                const dbRef = firebase.firestore().collection('users').doc(currentUser.uid);
+                dbRef.update({
+                    assignments: firebase.firestore.FieldValue.arrayUnion({
+                        title: formData.title,
+                        desc: formData.desc,
                         subject: formData.subject,
                         dueDate: new Date(
-                            formData.date.year,formData.date.month,formData.date.day,formData.time.hours,formData.time.minutes
-                        )
-                    }
+                            formData.date.year, formData.date.month, formData.date.day, formData.time.hours, formData.time.minutes)
+                    })
                 });
+                const data = await firebase.firestore().collection('users').doc(currentUser.uid).get().then(doc => doc.data());
+                actions({
+                    type: 'setState',
+                    payload: data
+                });
+                //console.log(state.subjects.find(e=>e.title === "Matematyka").color);
                 closingFn();
             }}>Dodaj</StyledButton>
         </Flex>

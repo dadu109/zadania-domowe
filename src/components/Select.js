@@ -68,7 +68,7 @@ const StyledHeader = styled.div`
 
 const Select = ({options, changeHandle, defaultValue,initialOpen, ...props}) => {
     //TODO: context on use state
-    const [currOption, setCurrOption] = useState(defaultValue?defaultValue:options[0].name);
+    const [currOption, setCurrOption] = useState(defaultValue?defaultValue:options[0].title);
     const [currColor, setCurrColor] = useState(options[0].color);
     const [open, setOpen] = useState(initialOpen);
 
@@ -90,16 +90,16 @@ const Select = ({options, changeHandle, defaultValue,initialOpen, ...props}) => 
                 color={`#${currColor}`}>{currOption}
             </StyledHeader>
             <StyledWrapper open={open}>
-                {options.map(e => <SelectItem onClick={
+                {options.map(e => <SelectItem key={e.title} onClick={
                     () => {
-                        setCurrOption(e.name);
+                        setCurrOption(e.title);
                         if (e.color) {
                             setCurrColor(e.color)
                         }
                         setOpen(false);
                     }
-                } value={e.name} hasColor={e.color} color={`#${e.color}`}>
-                    {e.name}
+                } value={e.title} hasColor={e.color} color={`#${e.color}`}>
+                    {e.title}
                 </SelectItem>)}
             </StyledWrapper>
         </SelectWrapper>

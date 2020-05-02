@@ -5,6 +5,7 @@ import triangle from '../assets/triangle.svg';
 import home from '../assets/home-solid.svg'
 import cog from '../assets/cog-solid.svg'
 import plus from '../assets/plus.svg'
+import AddSubject from '../modals/AddSubject'
 
 const StyledWrapper = styled.div`
     position:fixed;
@@ -48,6 +49,9 @@ const Cover = styled.div`
 `
 
 const SideNav = ({children}) => {
+    const [addingModalOpen,setAddingModalOpen] = useState(false);
+    const closeModal = () => {setAddingModalOpen(false)};
+    const openModal = () => {setAddingModalOpen(true)};
     const [navOpen,setNavOpen] = useState(false)
     const toggle = () => {setNavOpen(!navOpen)}
     const close = () => {setNavOpen(false)}
@@ -55,6 +59,7 @@ const SideNav = ({children}) => {
 
     return (
     <>
+        {addingModalOpen && <AddSubject closingFn={closeModal}/>}
         <Cover show={navOpen} onClick={close}/>
         <StyledWrapper navOpen={navOpen}>
 
@@ -64,7 +69,9 @@ const SideNav = ({children}) => {
                 {items.map(e=>React.cloneElement(e, {onClick: close} ))}
             </ConstItems>
             <ConstItems>
-                <NavItem icon={plus} link="#" onClick={close} title="Dodaj Przedmiot"/>
+                <NavItem icon={plus} onClick={()=>{
+                    setAddingModalOpen(true)
+                }} title="Dodaj Przedmiot"/>
                 <NavItem icon={cog} link="settings" onClick={close} title="Ustawienia"/>
             </ConstItems>
         </StyledWrapper>

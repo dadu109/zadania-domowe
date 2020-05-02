@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import ReactDOM from 'react-dom';
 import Root from './views/Root';
 import * as serviceWorker from './serviceWorker';
 import useGlobalStore from "./store/useGlobalStore";
 import Context from "./store/context";
-import {assignments} from "./utils";
+import {subjects,assignments} from "./utils";
+import {AuthContext, AuthProvider} from "./Auth";
 
 const Index = ({children}) => {
-    const store = useGlobalStore(assignments);
+    const store = useGlobalStore({subjects,assignments});
     return (
         <Context.Provider value={store}>
             {children}
@@ -17,9 +18,11 @@ const Index = ({children}) => {
 
 ReactDOM.render(
   <React.StrictMode>
-    <Index>
-        <Root />
-    </Index>
+      <AuthProvider>
+        <Index>
+            <Root />
+        </Index>
+      </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
