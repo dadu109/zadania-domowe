@@ -11,27 +11,24 @@ const StyledButton = styled.button`
 const SignInPage = () => {
     const {currentUser} = useContext(AuthContext);
 
-    if(!!currentUser)return <Redirect to={'/home'}/>;
+    if(!!currentUser)return <Redirect to={'/'}/>;
 
     return <StyledButton onClick={() => {
-        firebase.auth().signInWithPopup(provider).then(function (result) {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            var token = result.credential.accessToken;
-            console.log(token);
-            // The signed-in user info.
-            var user = result.user;
-            // ...
-        }).catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            // ...
-        });
-    }
+        firebase.auth().signInWithPopup(provider).then(function(user) {
+            const userUid = user.user.uid;
+            if(!user.additionalUserInfo.isNewUser)return;
+            console.log(user.additionalUserInfo.isNewUser);
+            console.log(user.user);
+            const account = {
+                userUid: userUid,
+                subjects: []
+            };
+            firebase.firestore().collection('users').doc(userUid).set(account);
+        })
+            .catch(function(error) {
+                console.log(error);
+            });
+        }
     }>Login</StyledButton>
 };
 

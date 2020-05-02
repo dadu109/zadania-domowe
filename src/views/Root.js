@@ -30,7 +30,7 @@ function Root() {
                     <SideNav>
                         {randCol.map(e => <NavItem color={`#${e.color}`} link={e.name} title={e.name}/>)}
                     </SideNav>
-                    <PrivateRoute path="/home">
+                    <PrivateRoute path="/">
                         <Page title="Zadania">
                             <Container title="Wszystkie" open={true}>
                                 {state.map(e => (
