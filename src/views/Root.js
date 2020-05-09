@@ -46,6 +46,7 @@ function Root() {
                             {state.assignments.map((assignment) => {
                                 const sub = state.subjects.find(e => e.title === assignment.subject);
                                 return <Assignment
+                                    timestamp={assignment.timestamp}
                                     dueDate={assignment.dueDate}
                                     title={assignment.title}
                                     description={assignment.desc}
@@ -61,6 +62,7 @@ function Root() {
                             <Container title="Do zrobienia" open={true}>
                                 {state.assignments.filter(e => e.subject === subject.title).map(assignment => (
                                     <Assignment
+                                        timestamp={assignment.timestamp}
                                         dueDate={assignment.dueDate}
                                         title={assignment.title}
                                         description={assignment.desc}

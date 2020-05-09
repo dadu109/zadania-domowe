@@ -115,8 +115,9 @@ const AddAssignment = ({closingFn}) => {
             <StyledButton yes onClick={async ()=> {
 
                 const dbRef = firebase.firestore().collection('users').doc(currentUser.uid);
-                dbRef.update({
+                await dbRef.update({
                     assignments: firebase.firestore.FieldValue.arrayUnion({
+                        timestamp: firebase.firestore.Timestamp.now(),
                         title: formData.title,
                         desc: formData.desc,
                         subject: formData.subject,
@@ -129,7 +130,6 @@ const AddAssignment = ({closingFn}) => {
                     type: 'setState',
                     payload: data
                 });
-                //console.log(state.subjects.find(e=>e.title === "Matematyka").color);
                 closingFn();
             }}>Dodaj</StyledButton>
         </Flex>
