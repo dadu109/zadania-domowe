@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StyledButton = styled.button`
   border-radius: 10px;
-  background-color:${props => props.yes?props.theme.color.green:props.no?props.theme.color.red:props.theme.color.dark3};
+  background-color:${props => props.color?props.color:props.yes?props.theme.color.green:props.no?props.theme.color.red:props.theme.color.dark3};
   font-weight: bold;
   font-size: 18px;
   display:flex;
@@ -15,8 +15,8 @@ const StyledButton = styled.button`
   border:none;
 `;
 
-const Button = ({yes,no,children, ...props}) => (
-    <StyledButton yes={yes} no={no} {...props}><span>{children}</span></StyledButton>
+const Button = ({yes,no,children, color,...props}) => (
+    <StyledButton color={color} yes={yes} no={no} {...props}><span>{children}</span></StyledButton>
 );
 
 export default Button;

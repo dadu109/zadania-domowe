@@ -48,12 +48,12 @@ function daysInCurrMonth() {
     return new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
 }
 
-const DateInput = ({changeHandle, title}) => {
+const DateInput = ({changeHandle, title, initialValue}) => {
     const date = new Date();
     const [state, setState] = useState({
-        day: date.getDate(),
-        month: date.getMonth() + 1,
-        year: date.getFullYear(),
+        day: initialValue?initialValue.getDate():date.getDate(),
+        month: initialValue?initialValue.getMonth():date.getMonth() + 1,
+        year: initialValue?initialValue.getFullYear():date.getFullYear(),
         daysInMonth: Array.from(
             {length: daysInCurrMonth()},
             (e, i) => ({title: i + 1})

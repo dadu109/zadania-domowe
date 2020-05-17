@@ -27,11 +27,11 @@ const StyledInput = styled.input`
   text-align: center;
 `;
 
-const TextInput = ({changeHandle, title, ...props}) => {
+const TextInput = ({changeHandle, title, initialValue,...props}) => {
     const d = new Date();
     const [state, setState] = useState({
-        hours: d.getHours(),
-        minutes: d.getMinutes()
+        hours: initialValue?initialValue.getHours():d.getHours(),
+        minutes: initialValue?initialValue.getMinutes():d.getMinutes()
     });
 
     useEffect(()=>{

@@ -6,11 +6,15 @@ import Button from "../components/Button"
 import firebase from "firebase";
 import {AuthContext} from "../Auth";
 import Context from "../store/context";
+import { HuePicker } from 'react-color';
 
 const StyledButton = styled(Button)`
   height:48px;
 `;
-
+const StyledHuePicker = styled(HuePicker)`
+  margin:2em auto;
+  border-radius: 10px;
+`;
 
 const AddSubject = ({closingFn}) => {
     const {currentUser} = useContext(AuthContext);
@@ -20,15 +24,23 @@ const AddSubject = ({closingFn}) => {
         color: '',
     });
 
+    const handleChangeComplete = (col) => {
+        setFormData({...formData,color:col.hex})
+    };
+
     return <Modal closingFn={closingFn}>
         <TextInput title={"Nazwa przedmiotu"} changeHandle={(e)=>setFormData({...formData,title:e})}/>
-        <TextInput title={"Kolor przedmiotu"} changeHandle={(e)=>setFormData({...formData,color:e})}/>
-        <StyledButton yes onClick={async()=>{
+        {/*<TextInput title={"Kolor przedmiotu"} changeHandle={(e)=>setFormData({...formData,color:e})}/>*/}
+        <StyledHuePicker
+            color={ formData.color }
+            onChange={ handleChangeComplete }
+        />
+        <StyledButton color={formData.color} yes onClick={async()=>{
             const dbRef = firebase.firestore().collection('users').doc(currentUser.uid);
             dbRef.update({
                 subjects: firebase.firestore.FieldValue.arrayUnion({
                     title:formData.title,
-                    color:formData.color
+                    color:formData.color.substring(1)
                 })
             });
             const data = await firebase.firestore().collection('users').doc(currentUser.uid).get().then(doc => doc.data());

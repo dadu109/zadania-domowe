@@ -7,6 +7,7 @@ import check from '../assets/check-solid.svg';
 import edit from '../assets/edit-solid.svg';
 import trash from '../assets/trash-solid.svg'
 import YesNoModal from "../modals/YesNoModal";
+import EditAssignment from "../modals/EditAssignment";
 import Context from "../store/context";
 import {AuthContext} from "../Auth";
 
@@ -100,17 +101,19 @@ const Assignment = ({title, dueDate, subjectColor, description, timestamp}) => {
     const actualDate = new Date(dueDate * 1000);
     const [assignmentOpen, setAssignmentOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [editModalOpen,setEditModalOpen] = useState(false);
     const toggle = () => {
         setAssignmentOpen(!assignmentOpen)
     };
-    const closeModal = () => {setDeleteModalOpen(false)};
+    const closeDeleteModal = () => {setDeleteModalOpen(false)};
+    const closeEditModal = () => {setEditModalOpen(false)};
     const parseTime = (time) => (time < 10 ? `0${time}` : time);
     const location = useLocation();
     const path = location.pathname;
 
     return <>
         {deleteModalOpen&&<YesNoModal
-            closingFn={closeModal}
+            closingFn={closeDeleteModal}
             message={`Czy napewno chcesz usunąć zadanie "${title}"`}
             yesValue={"Tak"}
             noValue={"Nie"}
@@ -128,6 +131,10 @@ const Assignment = ({title, dueDate, subjectColor, description, timestamp}) => {
                 console.log(filteredAssignments)
             }}
         />}
+        {editModalOpen && <EditAssignment
+            closingFn={closeEditModal}
+            assignment={{title, dueDate, description, timestamp}}
+        />}
         <StyledWrapper>
         {path === "/home" && <Color color={`#${subjectColor}`}/>}
         <Header onClick={toggle}>
@@ -140,7 +147,7 @@ const Assignment = ({title, dueDate, subjectColor, description, timestamp}) => {
         <Content assignmentOpen={assignmentOpen}>
             <p>{description}</p>
             <Buttons>
-                <span className="mr-auto"><img src={edit} alt="edit"/></span>
+                <span className="mr-auto"><img src={edit} onClick={()=>{setEditModalOpen(true)}} alt="edit"/></span>
                 <span className="mr-10"><img src={trash} onClick={()=>{setDeleteModalOpen(true)}} alt="trash"/></span>
                 <span><img src={check} alt="check"/></span>
             </Buttons>
