@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
+import {AuthContext} from "../Auth";
 
 const LinkWrapper = styled(Link)`
   padding:9px;
@@ -55,10 +56,11 @@ const StyledTitle = styled.p`
   overflow: hidden;
 `;
 
-const NavItem = ({color, link, title, icon, ...props}) => {
+const NavItem = ({color, link, title, icon, onClick,...props}) => {
     const StyledWrapper = link ? LinkWrapper : NoLinkWrapper;
+    const {currentUser} = useContext(AuthContext);
 
-    return <StyledWrapper to={link ? `/${link}` : null} {...props} >
+    return <StyledWrapper to={!!currentUser?link ? `/${link}` : null:'/login'} onClick={!!currentUser?onClick:null} {...props} >
         {icon ? <StyledIcon src={icon}/> : <StyledColor color={color}/>}
         <StyledTitle>{title}</StyledTitle>
     </StyledWrapper>
