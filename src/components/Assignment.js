@@ -96,32 +96,36 @@ const Buttons = styled.div`
 `;
 
 const Assignment = ({title, dueDate, subjectColor, description, timestamp}) => {
-    const {state,actions} = useContext(Context);
+    const {state, actions} = useContext(Context);
     const {currentUser} = useContext(AuthContext);
     const actualDate = new Date(dueDate * 1000);
     const [assignmentOpen, setAssignmentOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [editModalOpen,setEditModalOpen] = useState(false);
+    const [editModalOpen, setEditModalOpen] = useState(false);
     const toggle = () => {
         setAssignmentOpen(!assignmentOpen)
     };
-    const closeDeleteModal = () => {setDeleteModalOpen(false)};
-    const closeEditModal = () => {setEditModalOpen(false)};
+    const closeDeleteModal = () => {
+        setDeleteModalOpen(false)
+    };
+    const closeEditModal = () => {
+        setEditModalOpen(false)
+    };
     const parseTime = (time) => (time < 10 ? `0${time}` : time);
     const location = useLocation();
     const path = location.pathname;
 
     return <>
-        {deleteModalOpen&&<YesNoModal
+        {deleteModalOpen && <YesNoModal
             closingFn={closeDeleteModal}
             message={`Czy napewno chcesz usunąć zadanie "${title}"`}
             yesValue={"Tak"}
             noValue={"Nie"}
-            yesFn={async ()=>{
-                const filteredAssignments = state.assignments.filter(e=>e.timestamp !== timestamp);
+            yesFn={async () => {
+                const filteredAssignments = state.assignments.filter(e => e.timestamp !== timestamp);
                 const dbRef = await firebase.firestore().collection('users').doc(currentUser.uid);
                 await dbRef.update({
-                    assignments:filteredAssignments,
+                    assignments: filteredAssignments,
                 });
                 const data = await dbRef.get().then(doc => doc.data());
                 actions({
@@ -136,23 +140,44 @@ const Assignment = ({title, dueDate, subjectColor, description, timestamp}) => {
             assignment={{title, dueDate, description, timestamp}}
         />}
         <StyledWrapper>
-        {path === "/home" && <Color color={`#${subjectColor}`}/>}
-        <Header onClick={toggle}>
-            <Title>{title}</Title>
-            <DateContainer>
-                <span>{parseTime(actualDate.getHours())}:{parseTime(actualDate.getMinutes())}</span>
-                <span>{actualDate.getDate()} {monthNames[actualDate.getMonth()]}</span>
-            </DateContainer>
-        </Header>
-        <Content assignmentOpen={assignmentOpen}>
-            <p>{description}</p>
-            <Buttons>
-                <span className="mr-auto"><img src={edit} onClick={()=>{setEditModalOpen(true)}} alt="edit"/></span>
-                <span className="mr-10"><img src={trash} onClick={()=>{setDeleteModalOpen(true)}} alt="trash"/></span>
-                <span><img src={check} alt="check"/></span>
-            </Buttons>
-        </Content>
-    </StyledWrapper>
+            {path === "/home" && <Color color={`#${subjectColor}`}/>}
+            <Header onClick={toggle}>
+                <Title>{title}</Title>
+                {path !== "/done" && <DateContainer>
+                    <span>{parseTime(actualDate.getHours())}:{parseTime(actualDate.getMinutes())}</span>
+                    <span>{actualDate.getDate()} {monthNames[actualDate.getMonth()]}</span>
+                </DateContainer>}
+            </Header>
+            <Content assignmentOpen={assignmentOpen}>
+                <p>{description}</p>
+                {path !== "/done" && <Buttons>
+                    <span className="mr-auto"><img src={edit} onClick={() => {
+                        setEditModalOpen(true)
+                    }} alt="edit"/></span>
+                    <span className="mr-10"><img src={trash} onClick={() => {
+                        setDeleteModalOpen(true)
+                    }} alt="trash"/></span>
+                    <span><img src={check} onClick={async () => {
+                        const filteredAssignments = state.assignments.filter(e => e.timestamp !== timestamp);
+                        const dbRef = await firebase.firestore().collection('users').doc(currentUser.uid);
+                        await dbRef.update({
+                            assignments: filteredAssignments,
+                            done: firebase.firestore.FieldValue.arrayUnion({
+                                timestamp: timestamp,
+                                title: title,
+                                desc: description,
+                                subject:'',
+                            })
+                        });
+                        const data = await firebase.firestore().collection('users').doc(currentUser.uid).get().then(doc => doc.data());
+                        actions({
+                            type: 'setState',
+                            payload: data
+                        });
+                    }} alt="check"/></span>
+                </Buttons>}
+            </Content>
+        </StyledWrapper>
     </>
 };
 

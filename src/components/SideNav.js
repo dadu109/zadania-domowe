@@ -5,7 +5,9 @@ import triangle from '../assets/triangle.svg';
 import home from '../assets/home-solid.svg'
 import cog from '../assets/cog-solid.svg'
 import plus from '../assets/plus.svg'
+import check from '../assets/check-solid.svg'
 import AddSubject from '../modals/AddSubject'
+
 
 const StyledWrapper = styled.div`
     position:fixed;
@@ -31,6 +33,10 @@ const ConstItems = styled.div`
     flex-direction:column;
     overflow-y:scroll;
     max-height:75vh;
+    &:last-child{
+        overflow-y:hidden;
+        padding-top:10px;
+    }
     &::-webkit-scrollbar {
        display: none;
      }
@@ -69,6 +75,7 @@ const SideNav = ({children}) => {
                 {items.map(e=>React.cloneElement(e, {onClick: close} ))}
             </ConstItems>
             <ConstItems>
+                <NavItem icon={check} onClick={close} link={'done'} title={'Zrobione'}/>
                 <NavItem icon={plus} onClick={()=>{
                     setAddingModalOpen(true)
                 }} title="Dodaj Przedmiot"/>

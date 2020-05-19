@@ -69,12 +69,23 @@ function Root() {
                                     />
                                 ))}
                             </Container>
-                            <Container title="Zrobione">
-                                <Assignment dueDate={new Date()} title='Rozprawka' description={lorem}/>
-                            </Container>
                         </Page>
                     </PrivateRoute>
                 )}
+                <PrivateRoute path="/done">
+                    <Page title={'Zrobione'}>
+                        <Container title={'Zrobione'} open={true}>
+                            {state.done.map(assignment=>(
+                                <Assignment
+                                    timestamp={assignment.timestamp}
+                                    dueDate={assignment.dueDate}
+                                    title={assignment.title}
+                                    description={assignment.desc}
+                                />
+                            ))}
+                        </Container>
+                    </Page>
+                </PrivateRoute>
                 <PrivateRoute path="/settings">
                     <Page title="Ustawienia">
                         <Container title="Wszystkie" open={true}>

@@ -13,7 +13,10 @@ const StyledButton = styled(Button)`
 `;
 const StyledHuePicker = styled(HuePicker)`
   margin:2em auto;
-  border-radius: 10px;
+  
+  div{
+    border-radius: 10px !important;
+  }
 `;
 
 const AddSubject = ({closingFn}) => {

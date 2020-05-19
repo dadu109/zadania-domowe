@@ -8,7 +8,7 @@ import {subjects,assignments} from "./utils";
 import {AuthContext, AuthProvider} from "./Auth";
 
 const Index = ({children}) => {
-    const store = useGlobalStore({subjects,assignments});
+    const store = useGlobalStore({subjects:[],assignments:[],done:[]});
     return (
         <Context.Provider value={store}>
             {children}
