@@ -93,10 +93,15 @@ function Root() {
                                 onClick={() => {
                                     firebase.auth().signOut().then(function () {
                                         console.log('signed out');
+                                        actions({
+                                            type: 'setState',
+                                            payload: {subjects:[],assignments:[],done:[]}
+                                        });
                                         return <Redirect to={'/login'}/>
                                     }).catch(function (error) {
                                         // An error happened.
                                     });
+
                                 }}
                             >
                                 Wyloguj

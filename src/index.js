@@ -4,7 +4,6 @@ import Root from './views/Root';
 import * as serviceWorker from './serviceWorker';
 import useGlobalStore from "./store/useGlobalStore";
 import Context from "./store/context";
-import {subjects,assignments} from "./utils";
 import {AuthContext, AuthProvider} from "./Auth";
 
 const Index = ({children}) => {

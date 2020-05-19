@@ -4,9 +4,18 @@ import styled from "styled-components";
 import firebase from "firebase";
 import {AuthContext, provider} from "../Auth";
 import Context from "../store/context";
+import googleButton from '../assets/btn_google_light_normal_ios.svg'
 
 const StyledButton = styled.button`
-  font-size: 70px;
+  font-size: 30px;
+  line-height: 30px;
+  background-color:#fff;
+  border:none;
+  display: flex;
+  align-items: center;
+  img{
+    margin-right: 10px;
+  }
 `;
 
 const StyledWrapper = styled.div`
@@ -16,6 +25,9 @@ const StyledWrapper = styled.div`
   position:absolute;
   top:0;
   right:0;
+  display:flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const SignInPage = () => {
@@ -41,6 +53,7 @@ const SignInPage = () => {
                         userUid: userUid,
                         subjects: [],
                         assignments:[],
+                        done:[]
                     };
                     firebase.firestore().collection('users').doc(userUid).set(account);
                 })
@@ -48,7 +61,7 @@ const SignInPage = () => {
                         console.log(error);
                     });
                 }
-            }>Login</StyledButton>
+            }><img src={googleButton} alt={'googleSignIn'}/>Sign in</StyledButton>
         </StyledWrapper>
     )
 };
