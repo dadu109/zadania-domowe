@@ -16,10 +16,10 @@ const Title = styled.h5`
   color:#fff;
 `;
 
-const SubjectPicker = ({changeHandle,title,options}) => {
+const SubjectPicker = ({changeHandle,title,options,onItemClick}) => {
     return <InputWrapper>
         <Title>{title}</Title>
-        <Select changeHandle={changeHandle} options={options}/>
+        <Select onItemClick={onItemClick} changeHandle={changeHandle} options={options}/>
     </InputWrapper>
 };
 

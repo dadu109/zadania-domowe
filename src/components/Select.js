@@ -66,7 +66,7 @@ const StyledHeader = styled.div`
   }
 `;
 
-const Select = ({options, changeHandle, defaultValue,initialOpen, ...props}) => {
+const Select = ({options, changeHandle, defaultValue,initialOpen,onItemClick, ...props}) => {
     //TODO: context on use state
     const [currOption, setCurrOption] = useState(defaultValue?defaultValue:options[0]?options[0].title:null);
     const [currColor, setCurrColor] = useState(options[0]?options[0].color:null);
@@ -77,7 +77,9 @@ const Select = ({options, changeHandle, defaultValue,initialOpen, ...props}) => 
     }, [initialOpen]);
 
     useEffect(()=>{
-        changeHandle(currOption);
+        if(changeHandle){
+            changeHandle(currOption)
+        }
         setOpen(false);
     },[currOption]);
 
@@ -92,6 +94,9 @@ const Select = ({options, changeHandle, defaultValue,initialOpen, ...props}) => 
             <StyledWrapper open={open}>
                 {options.map(e => <SelectItem key={e.title} onClick={
                     () => {
+                        if(onItemClick){
+                            onItemClick(e.title)
+                        }
                         setCurrOption(e.title);
                         if (e.color) {
                             setCurrColor(e.color)

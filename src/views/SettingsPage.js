@@ -23,16 +23,12 @@ const StyledDiv = styled.div`
 `;
 
 const Settings = () => {
-    const [ableToDelete,setAbleToDelete] = useState(false);
+
     const {actions, state} = useContext(Context);
     const [toDelete,setToDelete] = useState(null);
     const [deleteModalOpen,setDeleteModalOpen] = useState(false);
     const history = useHistory();
     const {currentUser} = useContext(AuthContext);
-
-    useEffect(()=>{
-        setAbleToDelete(true)
-    },[toDelete]);
 
     const closeDeleteModal = () => {setDeleteModalOpen(false)};
 
@@ -73,11 +69,9 @@ const Settings = () => {
                 <StyledDiv>
                     <SubjectPicker
                         title="Usuń przedmiot"
-                        changeHandle={(curr) => {
-                            if(ableToDelete) {
-                                setToDelete(curr);
-                                setDeleteModalOpen(true)
-                            }
+                        onItemClick={(item)=>{
+                            setToDelete(item);
+                            setDeleteModalOpen(true)
                         }}
                         options={state.subjects}
                     />
