@@ -8,7 +8,6 @@ const StyledContainer = styled.div`
   border-radius:10px;
   background-color:${props => props.theme.color.dark2};
   transition:height .2s cubic-bezier(0.77, 0.2, 0.05, 1);
-  overflow: hidden;
   margin-bottom:20px ;
 `;
 
@@ -28,7 +27,6 @@ const ContainerHeader = styled.div`
       position: absolute;
       content:'${props => props.count}';
       width: 21px;
-      //height: 21px;
       line-height: 21px;
       text-align: center;
       font-size: 14px;
@@ -64,7 +62,6 @@ const Trigger = styled.div`
 
 const Content = styled.div`
   padding: ${props => props.containerOpen?'26px':'0'};
-  overflow: hidden;
   width:100%;
   height:auto;
   div:last-child{

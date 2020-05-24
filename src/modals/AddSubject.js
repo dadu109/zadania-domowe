@@ -32,7 +32,7 @@ const AddSubject = ({closingFn}) => {
     const [error,setError] = useState(null);
     const [formData, setFormData] = useState({
         title: '',
-        color: 'ffffff',
+        color: '#0086ff',
     });
 
     const handleChangeComplete = (col) => {
@@ -52,21 +52,25 @@ const AddSubject = ({closingFn}) => {
         <StyledButton color={formData.color} yes onClick={async()=>{
             const dbRef = await firebase.firestore().collection('users').doc(currentUser.uid);
             const {subjects} = await dbRef.get().then(doc => doc.data());
-            if(subjects && subjects.filter(e => e.title===formData.title).length===0){
+            if(subjects && subjects.some(e => e.title === formData.title)){
+                setError('Taki przedmiot już istnieje');
+            }else if(formData.title.length>15){
+                setError('Nazwa przedmiotu nie może mieć więcej niż 15 znaków');
+            }else if(formData.title===''){
+                setError('Przedmiot musi posiadać nazwę');
+            }else{
                 dbRef.update({
                     subjects: firebase.firestore.FieldValue.arrayUnion({
                         title:formData.title,
                         color:formData.color.substring(1)
                     })
                 });
-                const data = await firebase.firestore().collection('users').doc(currentUser.uid).get().then(doc => doc.data());
+                const data = await dbRef.get().then(doc => doc.data());
                 actions({
                     type: 'setState',
                     payload: data
                 });
                 closingFn();
-            }else{
-                setError('Taki przedmiot już istnieje');
             }
         }}>Dodaj</StyledButton>
     </Modal>

@@ -125,7 +125,7 @@ const AddAssignment = ({closingFn}) => {
                             formData.date.year, formData.date.month, formData.date.day, formData.time.hours, formData.time.minutes)
                     })
                 });
-                const data = await firebase.firestore().collection('users').doc(currentUser.uid).get().then(doc => doc.data());
+                const data = await dbRef.get().then(doc => doc.data());
                 actions({
                     type: 'setState',
                     payload: data

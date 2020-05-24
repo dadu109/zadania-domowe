@@ -68,8 +68,8 @@ const StyledHeader = styled.div`
 
 const Select = ({options, changeHandle, defaultValue,initialOpen, ...props}) => {
     //TODO: context on use state
-    const [currOption, setCurrOption] = useState(defaultValue?defaultValue:options[0].title);
-    const [currColor, setCurrColor] = useState(options[0].color);
+    const [currOption, setCurrOption] = useState(defaultValue?defaultValue:options[0]?options[0].title:null);
+    const [currColor, setCurrColor] = useState(options[0]?options[0].color:null);
     const [open, setOpen] = useState(initialOpen);
 
     useEffect(() => {

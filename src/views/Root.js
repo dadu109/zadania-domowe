@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import firebase from "firebase";
 import {ThemeProvider} from 'styled-components';
-import {BrowserRouter as Router, Route, Redirect} from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 import {theme, GlobalStyle} from '../theme';
 import NavItem from "../components/NavItem";
 import SideNav from "../components/SideNav";
@@ -11,11 +11,8 @@ import Assignment from "../components/Assignment";
 import Context from "../store/context";
 import PrivateRoute from "../components/PrivateRoute";
 import SignInPage from "./SignInPage";
-import Button from "../components/Button";
+import SettingsPage from './SettingsPage'
 import app from "../firebase";
-
-
-const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula dui urna, eu egestas odio condimentum vitae. Sed imperdiet aliquam auctor. Ut at urna sit amet tortor mattis. ';
 
 function Root() {
     const {actions, state} = useContext(Context);
@@ -75,7 +72,7 @@ function Root() {
                 <PrivateRoute path="/done">
                     <Page title={'Zrobione'}>
                         <Container title={'Zrobione'} open={true}>
-                            {state.done.map(assignment=>(
+                            {state.done.map(assignment => (
                                 <Assignment
                                     timestamp={assignment.timestamp}
                                     dueDate={assignment.dueDate}
@@ -87,27 +84,7 @@ function Root() {
                     </Page>
                 </PrivateRoute>
                 <PrivateRoute path="/settings">
-                    <Page title="Ustawienia">
-                        <Container title="Wszystkie" open={true}>
-                            <Button
-                                onClick={() => {
-                                    firebase.auth().signOut().then(function () {
-                                        console.log('signed out');
-                                        actions({
-                                            type: 'setState',
-                                            payload: {subjects:[],assignments:[],done:[]}
-                                        });
-                                        return <Redirect to={'/login'}/>
-                                    }).catch(function (error) {
-                                        // An error happened.
-                                    });
-
-                                }}
-                            >
-                                Wyloguj
-                            </Button>
-                        </Container>
-                    </Page>
+                    <SettingsPage/>
                 </PrivateRoute>
                 <Route path="/login">
                     <SignInPage/>

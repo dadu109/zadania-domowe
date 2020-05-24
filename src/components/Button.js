@@ -12,6 +12,7 @@ const StyledButton = styled.button`
   color:#fff;
   width:100%;
   height:100%;
+  min-height: 2em;
   border:none;
 `;
 
