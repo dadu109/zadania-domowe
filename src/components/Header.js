@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import sort from "../assets/sort-solid.svg"
+import FilterModal from "../modals/FilterModal";
 
 const StyledHeader = styled.div`
   position:relative;
@@ -18,7 +19,7 @@ const StyledHeader = styled.div`
     position:relative;
     line-height: ${props => props.theme.headerHeight};
     background-color:${props => props.theme.color.dark2};
-    ${props => props.color?`
+    ${props => props.color ? `
         &::before{
             content:'';
             position:absolute;
@@ -29,7 +30,7 @@ const StyledHeader = styled.div`
             height: 23px;
             background-color:${props.color};
         }
-    `:null}
+    ` : null}
   }
   
   img{
@@ -41,12 +42,17 @@ const StyledHeader = styled.div`
   }
 `;
 
-const Header = ({children, color}) => (
-    <StyledHeader color={color}>
-        <h1>{children}</h1>
-        {/*TODO: Sort modal opening on img click*/}
-        <img alt='we' src={sort}/>
-    </StyledHeader>
-);
+const Header = ({children, color}) => {
+    const [sortModalOpen,setSortModalOpen] = useState(false);
+
+    return (<>
+        {sortModalOpen&&<FilterModal closingFn={()=>{setSortModalOpen(false)}}/>}
+        <StyledHeader color={color}>
+            <h1>{children}</h1>
+            {/*TODO: Sort modal opening on img click*/}
+            <img alt='we' onClick={()=>{setSortModalOpen(true)}} src={sort}/>
+        </StyledHeader>
+    </>)
+};
 
 export default Header;

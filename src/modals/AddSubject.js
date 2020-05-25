@@ -8,6 +8,35 @@ import {AuthContext} from "../Auth";
 import Context from "../store/context";
 import { HuePicker } from 'react-color';
 
+const Header = styled.div`
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  h4{
+    margin:0;
+    color:#fff;
+    font-weight: bold;
+    font-size: 18px;
+  }
+`;
+const Close = styled.div`
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color:${props => props.theme.color.dark3};
+  color:#fff;
+  font-size: 36px;
+  transform: rotate(45deg);
+  position:relative;
+  span{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+  }
+`;
+
 const StyledButton = styled(Button)`
   height:48px;
 `;
@@ -40,6 +69,14 @@ const AddSubject = ({closingFn}) => {
     };
 
     return <Modal closingFn={closingFn}>
+        <Header>
+            <h4>Dodaj przedmiot</h4>
+            <Close onClick={() => {
+                closingFn()
+            }}>
+                <span>+</span>
+            </Close>
+        </Header>
         <TextInput title={"Nazwa przedmiotu"} changeHandle={(e)=> {
             setFormData({...formData, title: e});
             setError(null);
