@@ -11,10 +11,11 @@ w czasie rzeczywistym.
 ## Korzystanie z alikacji:
 
 ### Koniecznym jest zalogowanie się przez konto google.<br/>Następnym krokiem jest dodanie przedmiotów, a następnie zadań do przedmiotów.
-![login](rmassets/login.png)
+
 ![dodaj_przedmiot](rmassets/dodaj_przedmiot.png)
 ![dodaj_zadanie](rmassets/dodaj_zadanie.png)
 ![home](rmassets/home.png)
+![menu](rmassets/menu.png)
 
 ### Aplikacja posiada możliwość dodawania, usuwania oraz edytowania przedmiotów jak i zadań.
 
