@@ -16,3 +16,7 @@ w czasie rzeczywistym.
 ![login](rmassets/dodaj_zadanie.png)
 ![login](rmassets/home.png)
 
+####Aplikacja posiada możliwość dodawania, usuwania oraz edytowania przedmiotów jak i zadań.
+
+![login](rmassets/usuwanie.png)
+![login](rmassets/usun_przedmiot.png)
