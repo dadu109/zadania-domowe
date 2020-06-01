@@ -13,6 +13,8 @@ const StyledButton = styled.button`
   border:none;
   display: flex;
   align-items: center;
+  padding:15px;
+  border-radius: 10px;
   img{
     margin-right: 10px;
   }
@@ -28,6 +30,13 @@ const StyledWrapper = styled.div`
   display:flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+`;
+
+const Title = styled.h1`
+  font-size: 2.5em;
+  font-weight: bold;
+  color:#fff;
 `;
 
 const SignInPage = () => {
@@ -38,6 +47,7 @@ const SignInPage = () => {
 
     return(
         <StyledWrapper>
+            <Title>Zaloguj się:</Title>
             <StyledButton onClick={() => {
                 firebase.auth().signInWithPopup(provider).then(async function(user) {
                     const userUid = user.user.uid;

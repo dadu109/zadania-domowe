@@ -111,28 +111,30 @@ const EditAssignment = ({assignment, closingFn}) => {
                 }}
             />
             <StyledButton yes onClick={async () => {
-                const newAssignmentsArray = [...state.assignments].map(e=>{
-                    if(e.timestamp.seconds!==timestamp.seconds){
-                        return e;
-                    }
-                    return {
-                        ...e,
-                        title: formData.title,
-                        desc: formData.desc,
-                        dueDate: new Date(
-                            formData.date.year, formData.date.month, formData.date.day, formData.time.hours, formData.time.minutes)
-                    }
-                });
-                const dbRef = firebase.firestore().collection('users').doc(currentUser.uid);
-                await dbRef.update({
-                    assignments: newAssignmentsArray
-                });
-                const data = await firebase.firestore().collection('users').doc(currentUser.uid).get().then(doc => doc.data());
-                actions({
-                    type: 'setState',
-                    payload: data
-                });
-                closingFn();
+                if(formData.title) {
+                    const newAssignmentsArray = [...state.assignments].map(e => {
+                        if (e.timestamp.seconds !== timestamp.seconds) {
+                            return e;
+                        }
+                        return {
+                            ...e,
+                            title: formData.title,
+                            desc: formData.desc,
+                            dueDate: new Date(
+                                formData.date.year, formData.date.month, formData.date.day, formData.time.hours, formData.time.minutes)
+                        }
+                    });
+                    const dbRef = firebase.firestore().collection('users').doc(currentUser.uid);
+                    await dbRef.update({
+                        assignments: newAssignmentsArray
+                    });
+                    const data = await firebase.firestore().collection('users').doc(currentUser.uid).get().then(doc => doc.data());
+                    actions({
+                        type: 'setState',
+                        payload: data
+                    });
+                    closingFn();
+                }
             }}>Edytuj</StyledButton>
         </Flex>
     </Modal>

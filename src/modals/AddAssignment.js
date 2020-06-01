@@ -11,6 +11,7 @@ import firebase from "firebase";
 import {AuthContext} from "../Auth";
 import Context from "../store/context";
 
+
 const Header = styled.div`
   display:flex;
   justify-content: space-between;
@@ -59,6 +60,7 @@ const AddAssignment = ({closingFn}) => {
     const {state,actions} = useContext(Context);
     const {currentUser} = useContext(AuthContext);
 
+
     const [formData, setFormData] = useState({
         title: '',
         desc: '',
@@ -78,7 +80,7 @@ const AddAssignment = ({closingFn}) => {
         </Header>
         <TextInput
             changeHandle={(e) => {
-                if (formData.title.length <= 25) {
+                if (e.length <= 25) {
                     setFormData({...formData, title: e})
                 }
             }}
@@ -87,7 +89,7 @@ const AddAssignment = ({closingFn}) => {
         />
         <TextArea
             changeHandle={(e) => {
-                if (formData.title.length <= 100) {
+                if (e.length <= 100) {
                     setFormData({...formData, desc: e})
                 }
             }}
@@ -113,24 +115,25 @@ const AddAssignment = ({closingFn}) => {
                 }}
             />
             <StyledButton yes onClick={async ()=> {
-
-                const dbRef = firebase.firestore().collection('users').doc(currentUser.uid);
-                await dbRef.update({
-                    assignments: firebase.firestore.FieldValue.arrayUnion({
-                        timestamp: firebase.firestore.Timestamp.now(),
-                        title: formData.title,
-                        desc: formData.desc,
-                        subject: formData.subject,
-                        dueDate: new Date(
-                            formData.date.year, formData.date.month, formData.date.day, formData.time.hours, formData.time.minutes)
-                    })
-                });
-                const data = await dbRef.get().then(doc => doc.data());
-                actions({
-                    type: 'setState',
-                    payload: data
-                });
-                closingFn();
+                if(formData.title) {
+                    const dbRef = firebase.firestore().collection('users').doc(currentUser.uid);
+                    await dbRef.update({
+                        assignments: firebase.firestore.FieldValue.arrayUnion({
+                            timestamp: firebase.firestore.Timestamp.now(),
+                            title: formData.title,
+                            desc: formData.desc,
+                            subject: formData.subject,
+                            dueDate: new Date(
+                                formData.date.year, formData.date.month, formData.date.day, formData.time.hours, formData.time.minutes)
+                        })
+                    });
+                    const data = await dbRef.get().then(doc => doc.data());
+                    actions({
+                        type: 'setState',
+                        payload: data
+                    });
+                    closingFn()
+                }
             }}>Dodaj</StyledButton>
         </Flex>
     </Modal>

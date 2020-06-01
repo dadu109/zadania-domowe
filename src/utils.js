@@ -3,6 +3,13 @@ export const monthNames = [null, ...Array.from({length: 12}, (x, i) => {
     return str.charAt(0).toUpperCase() + str.slice(1)
 })];
 
+export const trim = (max,text) => {
+    const trimed = text;
+    trimed.substr(max,1);
+    console.log(text,trimed);
+    return text.length>max?trimed:text
+};
+
 export const years = [
     {title: 2020},
     {title: 2021},
