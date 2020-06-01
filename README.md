@@ -10,7 +10,8 @@ w czasie rzeczywistym.
 
 ##Korzystanie z alikacji:
 
-####Koniecznym jest zalogowanie się przez konto google.<br/> Następnym krokiem jest dodanie przedmiotów, a następnie zadań do przedmiotów.
+####Koniecznym jest zalogowanie się przez konto google.
+####Następnym krokiem jest dodanie przedmiotów, a następnie zadań do przedmiotów.
 ![login](rmassets/dodaj_przedmiot.png)
 ![login](rmassets/dodaj_zadanie.png)
 ![login](rmassets/home.png)
