@@ -4,7 +4,6 @@ import Modal from "./Modal";
 import TextInput from "../components/TextInput";
 import TextArea from "../components/TextArea";
 import DateInput from "../components/DateInput";
-import SubjectPicker from "../components/SubjectPicker";
 import TimeInput from '../components/TimeInput'
 import Button from "../components/Button";
 import firebase from "firebase";

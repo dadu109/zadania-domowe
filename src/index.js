@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './views/Root';
 import * as serviceWorker from './serviceWorker';
 import useGlobalStore from "./store/useGlobalStore";
 import Context from "./store/context";
-import {AuthContext, AuthProvider} from "./Auth";
+import {AuthProvider} from "./Auth";
 
 const Index = ({children}) => {
     const store = useGlobalStore({subjects:[],assignments:[],done:[]});

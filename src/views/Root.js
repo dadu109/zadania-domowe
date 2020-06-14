@@ -28,7 +28,7 @@ function Root() {
             }
         });
 
-    }, []);
+    }, [actions]);
 
     return (
         <ThemeProvider theme={theme}>

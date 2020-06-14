@@ -79,9 +79,7 @@ const SideNav = ({children}) => {
             </ConstItems>
             <ConstItems>
                 <NavItem icon={check} onClick={close} link={'done'} title={'Zrobione'}/>
-                <NavItem icon={plus} onClick={()=>{
-                    setAddingModalOpen(true)
-                }} title="Dodaj Przedmiot"/>
+                <NavItem icon={plus} onClick={openModal} title="Dodaj Przedmiot"/>
                 <NavItem icon={cog} link="settings" onClick={close} title="Ustawienia"/>
             </ConstItems>
         </StyledWrapper>
