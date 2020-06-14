@@ -9,6 +9,10 @@ const StyledContainer = styled.div`
   background-color:${props => props.theme.color.dark2};
   transition:height .2s cubic-bezier(0.77, 0.2, 0.05, 1);
   margin-bottom:20px ;
+  @media(min-width: 800px){
+    max-width: 800px;
+    margin:0 auto;
+  }
 `;
 
 const ContainerHeader = styled.div`

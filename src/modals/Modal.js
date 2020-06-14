@@ -28,6 +28,10 @@ const Wrapper = styled.div`
       margin:0;
     }
   }
+  @media (min-width: 800px){
+    max-width: 800px;
+    min-width: 600px;
+  }
 `;
 
 const Modal = ({children,closingFn}) => {

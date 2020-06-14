@@ -17,6 +17,9 @@ const StyledWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   padding:20px;
+  @media (min-width: 800px){
+    padding:45px;
+  }
 `;
 
 const AddButton = styled.div`

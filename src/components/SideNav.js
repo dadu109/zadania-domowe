@@ -26,6 +26,9 @@ const StyledWrapper = styled.div`
         transform: rotate(${props => props.navOpen?'-180deg':'0deg'})
     }
     z-index:200;
+    @media(min-width:800px){
+        max-width:400px;
+    }
 `
 
 const ConstItems = styled.div`
